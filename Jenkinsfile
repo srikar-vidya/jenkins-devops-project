@@ -36,5 +36,30 @@ pipeline {
                 }
             }
         }
+
+        stage('Update Kubernetes Manifest') {
+            steps {
+
+                sh """
+                sed -i 's#image:.*#image: srikarvidya/js-multistage:${IMAGE_TAG}#' deployment.yaml
+                """
+
+                sh 'git config --global user.email "jenkins@example.com"'
+                sh 'git config --global user.name "jenkins"'
+
+                sh 'git add deployment.yaml'
+
+                sh 'git commit -m "Updated image to ${IMAGE_TAG}" || true'
+
+                withCredentials([usernamePassword(
+                    credentialsId: 'github',
+                    usernameVariable: 'GUSER',
+                    passwordVariable: 'GPASS'
+                )]) {
+
+                    sh 'git push https://${GUSER}:${GPASS}@github.com/srikar-vidya/jenkins-devops-project.git HEAD:main'
+                }
+            }
+        }
     }
 }
