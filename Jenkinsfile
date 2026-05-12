@@ -3,11 +3,12 @@ pipeline {
 
     stages {
 
-        stage('Clone') {
-            steps {
-                git 'https://github.com/srikar-vidya/jenkins-devops-project.git'
-            }
-        }
+      stage('Clone') {
+    steps {
+        git branch: 'main',
+            url: 'https://github.com/srikar-vidya/jenkins-devops-project.git'
+    }
+}
 
         stage('Build Docker Image') {
             steps {
