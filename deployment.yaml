@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: srikarvidya/js-multistage:10
+        image: srikarvidya/js-multistage:11
 
         ports:
         - containerPort: 80
